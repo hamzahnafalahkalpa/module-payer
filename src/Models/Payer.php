@@ -1,23 +1,26 @@
 <?php
 
-namespace Gii\ModulePayer\Models;
+namespace Hanafalah\ModulePayer\Models;
 
-use Gii\ModuleOrganization\Models\Organization;
-use Gii\ModulePayer\Resources\Payer\ShowPayer;
-use Gii\ModulePayer\Resources\Payer\ViewPayer;
-use Zahzah\ModuleTransaction\Concerns\HasConsumentInvoice;
-use Zahzah\ModuleTransaction\Concerns\HasDeposit;
+use Hanafalah\ModuleOrganization\Models\Organization;
+use Hanafalah\ModulePayer\Resources\Payer\ShowPayer;
+use Hanafalah\ModulePayer\Resources\Payer\ViewPayer;
+use Hanafalah\ModuleTransaction\Concerns\HasConsumentInvoice;
+use Hanafalah\ModuleTransaction\Concerns\HasDeposit;
 
-class Payer extends Organization {
+class Payer extends Organization
+{
     use HasConsumentInvoice, HasDeposit;
 
     protected $table = 'organizations';
 
-    public function toShowApi(){
+    public function toShowApi()
+    {
         return new ShowPayer($this);
     }
 
-    public function toViewApi(){
+    public function toViewApi()
+    {
         return new ViewPayer($this);
     }
 }

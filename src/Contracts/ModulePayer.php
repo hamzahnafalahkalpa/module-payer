@@ -1,9 +1,7 @@
 <?php
 
-namespace Gii\ModulePayer\Contracts;
+namespace Hanafalah\ModulePayer\Contracts;
 
-use Gii\ModuleOrganization\Contracts\ModuleOrganization;
+use Hanafalah\ModuleOrganization\Contracts\ModuleOrganization;
 
-interface ModulePayer extends ModuleOrganization{
-
-}
+interface ModulePayer extends ModuleOrganization {}

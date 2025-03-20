@@ -1,5 +1,5 @@
 {
-    "name": "gii/module-payer",
+    "name": "hanafalah/module-payer",
     "description": "module for service in klinik or puskesmas",
     "type": "library",
     "require": {
@@ -8,19 +8,19 @@
         "http-interop/http-factory-guzzle": "^1.2",
         "illuminate/support": "^11.26",
         "symfony/process": "^7.1",
-        "zahzah/laravel-support": "1.x",
-        "gii/module-organization": "1.x",
-        "zahzah/module-transaction": "1.x"
+        "hanafalah/laravel-support": "1.x",
+        "hanafalah/module-organization": "1.x",
+        "hanafalah/module-transaction": "1.x"
     },
     "autoload": {
         "psr-4": {
-            "Gii\\ModulePayer\\": "src/"
+            "Hanafalah\\ModulePayer\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Gii\\ModulePayer\\ModulePayerServiceProvider"
+                "Hanafalah\\ModulePayer\\ModulePayerServiceProvider"
             ]
         }
     },

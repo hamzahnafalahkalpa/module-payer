@@ -1,8 +1,9 @@
 <?php
 
-namespace Gii\ModulePayer\Commands;
+namespace Hanafalah\ModulePayer\Commands;
 
-class InstallMakeCommand extends EnvironmentCommand{
+class InstallMakeCommand extends EnvironmentCommand
+{
     /**
      * The name and signature of the console command.
      *
@@ -23,7 +24,7 @@ class InstallMakeCommand extends EnvironmentCommand{
      */
     public function handle()
     {
-        $provider = 'Gii\ModulePayer\ModulePayerServiceProvider';
+        $provider = 'Hanafalah\ModulePayer\ModulePayerServiceProvider';
 
         $this->callSilent('vendor:publish', [
             '--provider' => $provider,
@@ -41,6 +42,6 @@ class InstallMakeCommand extends EnvironmentCommand{
         ]);
         $this->info('✔️  Module Card Identities tables migrated');
 
-        $this->comment('gii/module-payer installed successfully.');
+        $this->comment('hanafalah/module-payer installed successfully.');
     }
 }

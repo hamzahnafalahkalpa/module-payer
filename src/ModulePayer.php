@@ -1,9 +1,7 @@
 <?php
 
-namespace Gii\ModulePayer;
+namespace Hanafalah\ModulePayer;
 
-use Zahzah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\LaravelSupport\Supports\PackageManagement;
 
-class ModulePayer extends PackageManagement{
- 
-}
+class ModulePayer extends PackageManagement {}

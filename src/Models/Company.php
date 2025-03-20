@@ -1,33 +1,37 @@
 <?php
 
-namespace Gii\ModulePayer\Models;
+namespace Hanafalah\ModulePayer\Models;
 
-use Gii\ModuleOrganization\Models\Organization;
-use Gii\ModulePayer\Resources\Company\ShowCompany;
-use Gii\ModulePayer\Resources\Company\ViewCompany;
-use Zahzah\ModuleTransaction\Concerns\HasConsumentInvoice;
-use Zahzah\ModuleTransaction\Concerns\HasDeposit;
+use Hanafalah\ModuleOrganization\Models\Organization;
+use Hanafalah\ModulePayer\Resources\Company\ShowCompany;
+use Hanafalah\ModulePayer\Resources\Company\ViewCompany;
+use Hanafalah\ModuleTransaction\Concerns\HasConsumentInvoice;
+use Hanafalah\ModuleTransaction\Concerns\HasDeposit;
 
-class Company extends Organization {
+class Company extends Organization
+{
     use HasConsumentInvoice, HasDeposit;
 
     protected $table = 'organizations';
 
-    protected static function booted(): void{
+    protected static function booted(): void
+    {
         parent::booted();
-        static::creating(function($query){
+        static::creating(function ($query) {
             $query->flag = $query->getMorphClass();
         });
-        static::addGlobalScope('company',function($query){
-            $query->where('flag',(new static)->getMorphClass());
+        static::addGlobalScope('company', function ($query) {
+            $query->where('flag', (new static)->getMorphClass());
         });
     }
 
-    public function toShowApi(){
+    public function toShowApi()
+    {
         return new ShowCompany($this);
     }
 
-    public function toViewApi(){
+    public function toViewApi()
+    {
         return new ViewCompany($this);
     }
 }

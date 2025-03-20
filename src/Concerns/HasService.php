@@ -1,9 +1,11 @@
 <?php
 
-namespace Gii\ModulePayer\Concerns;
+namespace Hanafalah\ModulePayer\Concerns;
 
-trait HasService{
-    public function initialieHasService(){
+trait HasService
+{
+    public function initialieHasService()
+    {
         $this->ServiceModel()::setIdentityFlags($this->__flags_Service);
     }
 }

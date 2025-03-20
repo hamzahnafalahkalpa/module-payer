@@ -1,6 +1,6 @@
 <?php
 
-use Gii\ModulePayer\Models as ModulePayer;
+use Hanafalah\ModulePayer\Models as ModulePayer;
 
 return [
     'database' => [

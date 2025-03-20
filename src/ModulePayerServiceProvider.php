@@ -1,12 +1,12 @@
 <?php
 
-namespace Gii\ModulePayer;
+namespace Hanafalah\ModulePayer;
 
-use Gii\ModulePayer\{
+use Hanafalah\ModulePayer\{
     Schemas\Payer as SchemaPayer,
     Schemas\Company as SchemaCompany
 };
-use Zahzah\LaravelSupport\Providers\BaseServiceProvider;
+use Hanafalah\LaravelSupport\Providers\BaseServiceProvider;
 
 class ModulePayerServiceProvider extends BaseServiceProvider
 {
@@ -18,24 +18,26 @@ class ModulePayerServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->registerMainClass(ModulePayer::class)
-             ->registerCommandService(Providers\CommandServiceProvider::class)
-             ->registers([
+            ->registerCommandService(Providers\CommandServiceProvider::class)
+            ->registers([
                 '*',
-                'Services'  => function(){
+                'Services'  => function () {
                     $this->binds([
                         Contracts\ModulePayer::class  => ModulePayer::class,
                         Contracts\Payer::class        => SchemaPayer::class,
                         Contracts\Company::class      => SchemaCompany::class,
                     ]);
                 },
-             ]);
+            ]);
     }
 
-    protected function dir(): string{
-        return __DIR__.'/';
+    protected function dir(): string
+    {
+        return __DIR__ . '/';
     }
 
-    protected function migrationPath(string $path = ''): string{
+    protected function migrationPath(string $path = ''): string
+    {
         return database_path($path);
     }
 }
