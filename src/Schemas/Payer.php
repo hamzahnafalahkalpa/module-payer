@@ -5,7 +5,7 @@ namespace Hanafalah\ModulePayer\Schemas;
 use Hanafalah\ModuleOrganization\{
     Schemas\Organization
 };
-use Hanafalah\ModulePayer\Contracts;
+use Hanafalah\ModulePayer\Contracts\Schemas as Contracts;
 use Illuminate\Database\Eloquent\{
     Builder,
     Model,
