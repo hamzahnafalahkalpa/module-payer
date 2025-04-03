@@ -2,19 +2,16 @@
 
 namespace Hanafalah\ModulePayer\Schemas;
 
-use Hanafalah\ModuleOrganization\{
-    Schemas\Organization
-};
-use Hanafalah\ModulePayer\Contracts;
-use Illuminate\Database\Eloquent\{
-    Builder,
-    Model,
-    Collection,
-};
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Hanafalah\ModuleOrganization\Schemas\Organization;
+use Hanafalah\ModulePayer\Contracts\Schemas as Contracts;
+use Illuminate\Database\Eloquent\Model;
 
 class Payer extends Organization implements Contracts\Payer
 {
+    protected array $__guard   = ['id'];
+    protected array $__add     = ['name', 'flag', 'parent_id', 'props'];
     protected string $__entity = 'Payer';
     public static $payer_model;
 
@@ -26,135 +23,63 @@ class Payer extends Organization implements Contracts\Payer
         ]
     ];
 
-    public function getPayer(): mixed
-    {
-        return static::$payer_model;
-    }
-
-    protected function showUsingRelation(): array
-    {
+    protected function viewUsingRelation(){
         return [];
     }
 
-    public function prepareShowPayer(?Model $model = null): ?Model
-    {
-        $this->booting();
+    protected function showUsingRelation(){
+        return [];
+    }
+
+    public function getPayer(): mixed{
+        return static::$payer_model;
+    }
+
+    public function prepareShowPayer(?Model $model = null, ? array $attributes = null): ?Model{
+        $attributes ??= \request()->all();
 
         $model ??= $this->getPayer();
-        if (!isset($model)) {
-            $id = request()->id;
-            if (!request()->has('id')) throw new \Exception('No id provided', 422);
-
-            $model = $this->payer()->with($this->showUsingRelation())->find($id);
-        } else {
+        if (!isset($model)){
+            $id = $attributes['id'] ?? null;
+            if (!isset($id)) throw new \Exception('Id not found');
+            $model = $this->payer()->with($this->showUsingRelation())->findOrFail($id);
+        }else{
             $model->load($this->showUsingRelation());
         }
-
         return static::$payer_model = $model;
     }
 
-    public function showPayer(?Model $model = null): array
-    {
-        return $this->transforming($this->__resources['show'], function () use ($model) {
-            return $this->prepareShowPayer($model);
+    public function showPayer(?Model $model = null): array{
+        return $this->showEntityResource(function() use ($model){
+            $this->prepareShowPayer($model);
         });
     }
 
-    public function prepareStorePayer(?array $attributes = null): Model
-    {
+    private function localAddSuffixCache(mixed $suffix): void{
+        $this->addSuffixCache($this->__cache['index'], "payer-index", $suffix);
+    }
+
+    public function prepareViewPayerList(?array $attributes = null): Collection{
         $attributes ??= request()->all();
-
-        $payer = $this->PayerModel();
-        if (isset($attributes['id'])) $payer = $payer->find($attributes['id']);
-
-        $exceptions = [];
-        foreach ($attributes as $key => $attribute) {
-            if ($this->inArray($key, $exceptions)) continue;
-            $payer->{$key} = $attribute;
+        if (isset($attributes['flag'])) {
+            $attributes['flag'] = $this->mustArray($attributes['flag']);
+            $this->localAddSuffixCache(implode('-', $attributes['flag']));
         }
-        $payer->save();
-
-        static::$payer_model = $payer;
-        $this->forgetTags(['payer', 'organization']);
-
-        return $payer;
-    }
-
-    public function storePayer(): array
-    {
-        return $this->transaction(function () {
-            return $this->showPayer($this->prepareStorePayer());
+        return static::$payer_model = $this->cacheWhen(!$this->isSearch(), $this->__cache['index'], function () use ($attributes) {
+            return $this->payer()->when(isset($attributes['flag']), function ($query) use ($attributes) {
+                $query->flagIn($attributes['flag']);
+            })->orderBy('name', 'asc')->get();
         });
     }
 
-    public function prepareViewPayerList(): Collection
-    {
-        return static::$payer_model = $this->cacheWhen(!$this->isSearch(), $this->__cache['index'], function () {
-            return $this->payer()->orderBy('name', 'asc')->get();
-        });
-    }
-
-    public function viewPayerList(): array
-    {
-        return $this->transforming($this->__resources['index'], function () {
+    public function viewPayerList(): array{
+        return $this->viewEntityResource(function() {
             return $this->prepareViewPayerList();
         });
     }
 
-    private function localAddSuffixCache(mixed $suffix): void
-    {
-        $this->addSuffixCache($this->__cache['index'], "payer-index", $suffix);
-    }
-
-    public function prepareViewPayerPaginate(int $perPage = 50, array $columns = ['*'], string $pageName = 'page', ?int $page = null, ?int $total = null): LengthAwarePaginator
-    {
-        $paginate_options = compact('perPage', 'columns', 'pageName', 'page', 'total');
-        $this->localAddSuffixCache('paginate');
-        return $this->cacheWhen(!$this->isSearch(), $this->__cache['index'], function () use ($paginate_options) {
-            return $this->payer()->paginate(...$this->arrayValues($paginate_options))
-                ->appends(request()->all());
-        });
-    }
-
-    public function viewPayerPaginate(int $perPage = 50, array $columns = ['*'], string $pageName = 'page', ?int $page = null, ?int $total = null): array
-    {
-        $paginate_options = compact('perPage', 'columns', 'pageName', 'page', 'total');
-        return $this->transforming($this->__resources['view'], function () use ($paginate_options) {
-            return $this->prepareViewPayerPaginate(...$this->arrayValues($paginate_options));
-        });
-    }
-
-    public function get(mixed $conditionals = null): Collection
-    {
-        return $this->payer()->get();
-    }
-
-    public function refind($id = null): Model|null
-    {
-        return $this->payer(function ($query) use ($id) {
-            $query->where($this->OrganizationModel()->getKeyName(), request()->id);
-        })->first();
-    }
-
-    public function payer($conditionals = null): Builder
-    {
+    public function payer(mixed $conditionals = []): Builder{
         $this->booting();
-        return $this->PayerModel()->withParameters()->conditionals($conditionals);
-    }
-
-    public function prepareDeletePayer(?array $attributes = null): bool
-    {
-        $attributes ??= request()->all();
-        if (!isset($attributes['id'])) throw new \Exception('No id provided', 422);
-        $result = $this->PayerModel()->destroy($attributes['id']);
-        $this->forgetTags(['payer', 'organization']);
-        return $result;
-    }
-
-    public function deletePayer(): bool
-    {
-        return $this->transaction(function () {
-            return $this->prepareDeletePayer();
-        });
+        return $this->PayerModel()->conditionals($this->mergeCondition($conditionals ?? []))->withParameters()->orderBy('name', 'asc');
     }
 }

@@ -5,8 +5,8 @@ namespace Hanafalah\ModulePayer\Models;
 use Hanafalah\ModuleOrganization\Models\Organization;
 use Hanafalah\ModulePayer\Resources\Company\ShowCompany;
 use Hanafalah\ModulePayer\Resources\Company\ViewCompany;
-use Hanafalah\ModuleTransaction\Concerns\HasConsumentInvoice;
-use Hanafalah\ModuleTransaction\Concerns\HasDeposit;
+use Hanafalah\ModulePayment\Concerns\HasConsumentInvoice;
+use Hanafalah\ModulePayment\Concerns\HasDeposit;
 
 class Company extends Organization
 {
@@ -25,13 +25,11 @@ class Company extends Organization
         });
     }
 
-    public function toShowApi()
-    {
-        return new ShowCompany($this);
+    public function getShowResource(){
+        return ShowCompany::class;
     }
 
-    public function toViewApi()
-    {
-        return new ViewCompany($this);
+    public function getViewResource(){
+        return ViewCompany::class;
     }
 }

@@ -5,8 +5,8 @@ namespace Hanafalah\ModulePayer\Models;
 use Hanafalah\ModuleOrganization\Models\Organization;
 use Hanafalah\ModulePayer\Resources\Payer\ShowPayer;
 use Hanafalah\ModulePayer\Resources\Payer\ViewPayer;
-use Hanafalah\ModuleTransaction\Concerns\HasConsumentInvoice;
-use Hanafalah\ModuleTransaction\Concerns\HasDeposit;
+use Hanafalah\ModulePayment\Concerns\HasConsumentInvoice;
+use Hanafalah\ModulePayment\Concerns\HasDeposit;
 
 class Payer extends Organization
 {
@@ -14,13 +14,11 @@ class Payer extends Organization
 
     protected $table = 'organizations';
 
-    public function toShowApi()
-    {
-        return new ShowPayer($this);
+    public function getShowResource(){
+        return ShowPayer::class;
     }
 
-    public function toViewApi()
-    {
-        return new ViewPayer($this);
+    public function getViewResource(){
+        return ViewPayer::class;
     }
 }
