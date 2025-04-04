@@ -4,13 +4,12 @@ use Hanafalah\ModulePayer\Models as ModulePayer;
 
 return [
     'libs' => [
-        'model' => 'Models',
-        'contract' => 'Contracts'
+        'model'    => 'Models',
+        'contract' => 'Contracts',
+        'schema'   => 'Schemas'
     ],
     'database' => [
         'models' => [
-            'Payer'   => ModulePayer\Payer::class,
-            'Company' => ModulePayer\Company::class,
         ]
     ],
 ];
