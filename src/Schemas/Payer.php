@@ -23,11 +23,11 @@ class Payer extends Organization implements Contracts\Payer
         ]
     ];
 
-    protected function viewUsingRelation(){
+    protected function viewUsingRelation(): array{
         return [];
     }
 
-    protected function showUsingRelation(){
+    protected function showUsingRelation(): array{
         return [];
     }
 
