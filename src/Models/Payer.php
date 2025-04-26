@@ -14,6 +14,14 @@ class Payer extends Organization
 
     protected $table = 'organizations';
 
+    public function viewUsingRelation(): array{
+        return [];
+    }
+
+    public function showUsingRelation(): array{
+        return [];
+    }
+
     public function getShowResource(){
         return ShowPayer::class;
     }

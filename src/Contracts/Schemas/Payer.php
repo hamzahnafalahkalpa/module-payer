@@ -4,15 +4,22 @@ namespace Hanafalah\ModulePayer\Contracts\Schemas;
 
 use Hanafalah\ModuleOrganization\Contracts\Schemas\Organization;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @see \Hanafalah\ModuleOrganization\Schemas\Payer
+ * @method self conditionals(mixed $conditionals)
+ * @method array storePayer(?PayerData $rab_work_list_dto = null)
+ * @method bool deletePayer()
+ * @method bool prepareDeletePayer(? array $attributes = null)
+ * @method mixed getPayer()
+ * @method ?Model prepareShowPayer(?Model $model = null, ?array $attributes = null)
+ * @method array showPayer(?Model $model = null)
+ * @method array viewPayerList()
+ * @method Collection prepareViewPayerList(? array $attributes = null)
+ * @method LengthAwarePaginator prepareViewPayerPaginate(PaginateData $paginate_dto)
+ * @method array viewPayerPaginate(?PaginateData $paginate_dto = null)
+ */
 interface Payer extends Organization
 {
-    public function getPayer(): mixed;
-    public function prepareShowPayer(?Model $model = null, ? array $attributes = null): ?Model;
-    public function showPayer(?Model $model = null): array;
-    public function prepareViewPayerList(?array $attributes = null): Collection;
-    public function viewPayerList(): array;
     public function payer(mixed $conditionals = []): Builder;
 }
