@@ -1,12 +1,31 @@
 <?php
 
-use Hanafalah\ModulePayer\Models as ModulePayer;
+use Hanafalah\ModulePayer\{
+    Commands
+};
 
 return [
-    'database' => [
-        'models' => [
-            'Payer'   => ModulePayer\Payer::class,
-            'Company' => ModulePayer\Company::class,
+    'namespace' => 'Hanafalah\\ModulePayer',
+    'app' => [
+        'contracts' => [
+            //ADD YOUR CONTRACTS HERE
         ]
     ],
+    'libs' => [
+        'model' => 'Models',
+        'contract' => 'Contracts',
+        'schema' => 'Schemas',
+        'database' => 'Database',
+        'data' => 'Data',
+        'resource' => 'Resources',
+        'migration' => '../assets/database/migrations'
+    ],
+    'database' => [
+        'models' => [
+
+        ]
+    ],
+    'commands' => [
+        Commands\InstallMakeCommand::class
+    ]
 ];
