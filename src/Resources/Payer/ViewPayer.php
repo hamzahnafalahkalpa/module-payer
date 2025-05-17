@@ -2,7 +2,7 @@
 
 namespace Hanafalah\ModulePayer\Resources\Payer;
 
-use Hanafalah\ModuleOrganization\Resources\ViewOrganization;
+use Hanafalah\ModuleOrganization\Resources\Organization\ViewOrganization;
 
 class ViewPayer extends ViewOrganization
 {
@@ -10,7 +10,6 @@ class ViewPayer extends ViewOrganization
   {
     $arr = [];
     $arr = $this->mergeArray(parent::toArray($request), $arr);
-
     return $arr;
   }
 }
