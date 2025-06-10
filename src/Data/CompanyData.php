@@ -2,29 +2,8 @@
 
 namespace Hanafalah\ModulePayer\Data;
 
-use Hanafalah\LaravelSupport\Supports\Data;
-use Hanafalah\ModulePayer\Contracts\Data\PayerData as DataPayerData;
-use Spatie\LaravelData\Attributes\MapInputName;
-use Spatie\LaravelData\Attributes\MapName;
+use Hanafalah\ModuleOrganization\Data\OrganizationData;
+use Hanafalah\ModulePayer\Contracts\Data\CompanyData as DataCompanyData;
 
-class CompanyData extends Data implements DataPayerData{
-    #[MapInputName('id')]
-    #[MapName('id')]
-    public mixed $id = null;
-    
-    #[MapInputName('name')]
-    #[MapName('name')]
-    public string $name;
-    
-    #[MapInputName('flag')]
-    #[MapName('flag')]
-    public ?string $flag = null;
-    
-    #[MapInputName('parent_id')]
-    #[MapName('parent_id')]
-    public mixed $parent_id = null;
-    
-    #[MapInputName('props')]
-    #[MapName('props')]
-    public ?array $props = [];
+class CompanyData extends OrganizationData implements DataCompanyData{
 }

@@ -1,0 +1,25 @@
+<?php
+
+namespace Hanafalah\ModulePayer\Contracts\Schemas;
+
+use Hanafalah\ModuleOrganization\Contracts\Schemas\Organization;
+use Illuminate\Database\Eloquent\Builder;
+
+/**
+ * @see \Hanafalah\ModuleOrganization\Schemas\Company
+ * @method self conditionals(mixed $conditionals)
+ * @method array storeCompany(?CompanyData $rab_work_list_dto = null)
+ * @method bool deleteCompany()
+ * @method bool prepareDeleteCompany(? array $attributes = null)
+ * @method mixed getCompany()
+ * @method ?Model prepareShowCompany(?Model $model = null, ?array $attributes = null)
+ * @method array showCompany(?Model $model = null)
+ * @method array viewCompanyList()
+ * @method Collection prepareViewCompanyList(? array $attributes = null)
+ * @method LengthAwarePaginator prepareViewCompanyPaginate(PaginateData $paginate_dto)
+ * @method array viewCompanyPaginate(?PaginateData $paginate_dto = null)
+ * @method Builder company(mixed $conditionals = null)
+ */
+interface Company extends Organization
+{
+}
