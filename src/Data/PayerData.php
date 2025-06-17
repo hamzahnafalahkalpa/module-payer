@@ -2,29 +2,23 @@
 
 namespace Hanafalah\ModulePayer\Data;
 
-use Hanafalah\LaravelSupport\Supports\Data;
+use Hanafalah\ModuleOrganization\Data\OrganizationData;
 use Hanafalah\ModulePayer\Contracts\Data\PayerData as DataPayerData;
-use Spatie\LaravelData\Attributes\MapInputName;
-use Spatie\LaravelData\Attributes\MapName;
 
-class PayerData extends Data implements DataPayerData{
-    #[MapInputName('id')]
-    #[MapName('id')]
-    public mixed $id = null;
-    
-    #[MapInputName('name')]
-    #[MapName('name')]
-    public string $name;
-    
-    #[MapInputName('flag')]
-    #[MapName('flag')]
-    public ?string $flag = null;
-    
-    #[MapInputName('parent_id')]
-    #[MapName('parent_id')]
-    public mixed $parent_id = null;
-    
-    #[MapInputName('props')]
-    #[MapName('props')]
-    public ?array $props = [];
+class PayerData extends OrganizationData implements DataPayerData{
+    public static function before(array &$attributes)
+    {
+        $new = static::new();
+        $attributes['flag'] ??= 'Company';
+        if (isset($attributes['id'])){
+            $organization = $new->{$attributes['flag'].'Model'}()->findOrFail($attributes['id']);
+            $attributes['name'] ??= $organization->name;
+            $attributes['parent_id'] ??= $organization->parent_id;
+            $props = $organization->getOriginal('props') ?? [];
+            foreach ($props as $key => $prop) {
+                $attributes[$key] = $prop;
+            }
+        }
+        $attributes['is_payer_able'] = true;
+    }
 }

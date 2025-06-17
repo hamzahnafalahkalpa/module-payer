@@ -8,7 +8,9 @@ class ViewPayer extends ViewOrganization
 {
   public function toArray(\Illuminate\Http\Request $request): array
   {
-    $arr = [];
+    $arr = [
+      'is_payer_able' => $this->is_payer_able
+    ];
     $arr = $this->mergeArray(parent::toArray($request), $arr);
     return $arr;
   }

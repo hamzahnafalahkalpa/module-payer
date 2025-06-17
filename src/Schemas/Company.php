@@ -3,12 +3,15 @@
 namespace Hanafalah\ModulePayer\Schemas;
 
 use Hanafalah\ModuleOrganization\Schemas\Organization;
+use Hanafalah\ModulePayer\Contracts\Data\CompanyData;
 use Hanafalah\ModulePayer\Contracts\Schemas as Contracts;
+use Illuminate\Database\Eloquent\Model;
 
 class Company extends Organization implements Contracts\Company
 {
     protected string $__entity = 'Company';
     public static $company_model;
+    protected mixed $__order_by_created_at = false; //asc, desc, false
 
     protected array $__cache = [
         'index' => [
@@ -17,4 +20,9 @@ class Company extends Organization implements Contracts\Company
             'duration' => 24 * 60 
         ]
     ];
+
+    public function prepareStoreCompany(CompanyData $company_dto): Model{
+        $company = $this->prepareStoreOrganization($company_dto);
+        return static::$company_model = $company;
+    }
 }

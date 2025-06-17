@@ -3,11 +3,14 @@
 namespace Hanafalah\ModulePayer\Contracts\Schemas;
 
 use Hanafalah\ModuleOrganization\Contracts\Schemas\Organization;
+use Hanafalah\ModulePayer\Contracts\Data\CompanyData;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @see \Hanafalah\ModuleOrganization\Schemas\Company
  * @method self conditionals(mixed $conditionals)
+ * @method mixed export(string $type)
  * @method array storeCompany(?CompanyData $rab_work_list_dto = null)
  * @method bool deleteCompany()
  * @method bool prepareDeleteCompany(? array $attributes = null)
@@ -22,4 +25,5 @@ use Illuminate\Database\Eloquent\Builder;
  */
 interface Company extends Organization
 {
+    public function prepareStoreCompany(CompanyData $company_dto): Model;
 }
