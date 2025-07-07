@@ -2,24 +2,29 @@
 
 namespace Hanafalah\ModulePayer\Contracts\Schemas;
 
+use Hanafalah\ModuleOrganization\Contracts\Schemas\Organization;
+use Hanafalah\ModulePayer\Contracts\Data\CompanyData;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 
-interface Company extends DataManagement
+/**
+ * @see \Hanafalah\ModuleOrganization\Schemas\Company
+ * @method self setParamLogic(string $logic, bool $search_value = false, ?array $optionals = [])
+ * @method self conditionals(mixed $conditionals)
+ * @method mixed export(string $type)
+ * @method array storeCompany(?CompanyData $rab_work_list_dto = null)
+ * @method bool deleteCompany()
+ * @method bool prepareDeleteCompany(? array $attributes = null)
+ * @method mixed getCompany()
+ * @method ?Model prepareShowCompany(?Model $model = null, ?array $attributes = null)
+ * @method array showCompany(?Model $model = null)
+ * @method array viewCompanyList()
+ * @method Collection prepareViewCompanyList(? array $attributes = null)
+ * @method LengthAwarePaginator prepareViewCompanyPaginate(PaginateData $paginate_dto)
+ * @method array viewCompanyPaginate(?PaginateData $paginate_dto = null)
+ * @method Builder company(mixed $conditionals = null)
+ */
+interface Company extends Organization
 {
-    public function getCompany(): mixed;
-    public function prepareShowCompany(?Model $model = null): ?Model;
-    public function showCompany(?Model $model = null): array;
-    public function prepareStoreCompany(?array $attributes = null): Model;
-    public function storeCompany(): array;
-    public function prepareViewCompanyList(): Collection;
-    public function viewCompanyList(): array;
-    public function prepareViewCompanyPaginate(int $perPage = 50, array $columns = ['*'], string $pageName = 'page', ?int $page = null, ?int $total = null): LengthAwarePaginator;
-    public function viewCompanyPaginate(int $perPage = 50, array $columns = ['*'], string $pageName = 'page', ?int $page = null, ?int $total = null): array;
-    public function company($conditionals = null): Builder;
-    public function prepareDeleteCompany(?array $attributes = null): bool;
-    public function deleteCompany(): bool;
+    public function prepareStoreCompany(CompanyData $company_dto): Model;
 }

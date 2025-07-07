@@ -6,9 +6,13 @@ use Hanafalah\ModulePayer\{
 
 return [
     'namespace' => 'Hanafalah\\ModulePayer',
-    'app' => [
-        'contracts' => [
-            //ADD YOUR CONTRACTS HERE
+    'libs' => [
+        'model'    => 'Models',
+        'contract' => 'Contracts',
+        'schema'   => 'Schemas'
+    ],
+    'database' => [
+        'models' => [
         ]
     ],
     'libs' => [

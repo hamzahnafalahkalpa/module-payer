@@ -5,8 +5,8 @@ namespace Hanafalah\ModulePayer\Models;
 use Hanafalah\ModuleOrganization\Models\Organization;
 use Hanafalah\ModulePayer\Resources\Company\ShowCompany;
 use Hanafalah\ModulePayer\Resources\Company\ViewCompany;
-use Hanafalah\ModuleTransaction\Concerns\HasConsumentInvoice;
-use Hanafalah\ModuleTransaction\Concerns\HasDeposit;
+use Hanafalah\ModulePayment\Concerns\HasConsumentInvoice;
+use Hanafalah\ModulePayment\Concerns\HasDeposit;
 
 class Company extends Organization
 {
@@ -14,24 +14,31 @@ class Company extends Organization
 
     protected $table = 'organizations';
 
-    protected static function booted(): void
-    {
+    protected static function booted(): void{
         parent::booted();
+        static::addGlobalScope('flag',function($query){
+            $query->flagIn('Company');
+        });
         static::creating(function ($query) {
-            $query->flag = $query->getMorphClass();
-        });
-        static::addGlobalScope('company', function ($query) {
-            $query->where('flag', (new static)->getMorphClass());
+            $query->flag = 'Company';
         });
     }
 
-    public function toShowApi()
+    public function viewUsingRelation(): array
     {
-        return new ShowCompany($this);
+        return [];
     }
 
-    public function toViewApi()
+    public function showUsingRelation(): array
     {
-        return new ViewCompany($this);
+        return ['parent'];
+    }
+
+    public function getShowResource(){
+        return ShowCompany::class;
+    }
+
+    public function getViewResource(){
+        return ViewCompany::class;
     }
 }
