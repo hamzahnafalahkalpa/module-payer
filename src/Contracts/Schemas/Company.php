@@ -22,9 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method Collection prepareViewCompanyList(? array $attributes = null)
  * @method LengthAwarePaginator prepareViewCompanyPaginate(PaginateData $paginate_dto)
  * @method array viewCompanyPaginate(?PaginateData $paginate_dto = null)
- * @method Builder company(mixed $conditionals = null)
  */
 interface Company extends Organization
 {
     public function prepareStoreCompany(CompanyData $company_dto): Model;
+    public function company(mixed $conditionals = null): Builder;
 }

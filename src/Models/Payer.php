@@ -12,7 +12,7 @@ class Payer extends Organization
 {
     use HasConsumentInvoice, HasDeposit;
 
-    protected $table = 'organizations';
+    protected $table = 'unicodes';
 
     public function viewUsingRelation(): array{
         return [];

@@ -20,5 +20,6 @@ class PayerData extends OrganizationData implements DataPayerData{
             }
         }
         $attributes['is_payer_able'] = true;
+        parent::before($attributes);
     }
 }

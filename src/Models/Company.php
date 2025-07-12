@@ -12,17 +12,7 @@ class Company extends Organization
 {
     use HasConsumentInvoice, HasDeposit;
 
-    protected $table = 'organizations';
-
-    protected static function booted(): void{
-        parent::booted();
-        static::addGlobalScope('flag',function($query){
-            $query->flagIn('Company');
-        });
-        static::creating(function ($query) {
-            $query->flag = 'Company';
-        });
-    }
+    protected $table = 'unicodes';
 
     public function viewUsingRelation(): array
     {

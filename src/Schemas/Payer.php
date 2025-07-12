@@ -28,9 +28,6 @@ class Payer extends Organization implements Contracts\Payer
     }
 
     public function payer(mixed $conditionals = []): Builder{
-        return $this->generalSchemaModel($conditionals)
-                    ->withParameters()->when(isset(request()->flag), function ($query) {
-                        $query->flagIn(request()->flag);
-                    })->where('props->is_payer_able',true);
+        return $this->organization()->where('props->is_payer_able',true);
     }
 }
