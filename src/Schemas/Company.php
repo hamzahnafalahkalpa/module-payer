@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Organization implements Contracts\Company
 {
     protected string $__entity = 'Company';
-    public static $company_model;
+    public $company_model;
     protected mixed $__order_by_created_at = false; //asc, desc, false
 
     protected array $__cache = [
@@ -24,7 +24,7 @@ class Company extends Organization implements Contracts\Company
 
     public function prepareStoreCompany(CompanyData $company_dto): Model{
         $company = $this->prepareStoreOrganization($company_dto);
-        return static::$company_model = $company;
+        return $this->company_model = $company;
     }
 
     public function company(mixed $conditionals = null): Builder{

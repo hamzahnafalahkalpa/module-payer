@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payer extends Organization implements Contracts\Payer
 {
     protected string $__entity = 'Payer';
-    public static $payer_model;
+    public $payer_model;
     protected mixed $__order_by_created_at = false; //asc, desc, false
 
     protected array $__cache = [
@@ -24,7 +24,7 @@ class Payer extends Organization implements Contracts\Payer
 
     public function prepareStorePayer(PayerData $payer_dto): Model{
         $payer = $this->prepareStoreOrganization($payer_dto);
-        return static::$payer_model = $payer;
+        return $this->payer_model = $payer;
     }
 
     public function payer(mixed $conditionals = []): Builder{
