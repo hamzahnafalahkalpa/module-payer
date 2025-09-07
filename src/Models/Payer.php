@@ -2,17 +2,22 @@
 
 namespace Hanafalah\ModulePayer\Models;
 
-use Hanafalah\ModuleOrganization\Models\Organization;
 use Hanafalah\ModulePayer\Resources\Payer\ShowPayer;
 use Hanafalah\ModulePayer\Resources\Payer\ViewPayer;
-use Hanafalah\ModulePayment\Concerns\HasConsumentInvoice;
-use Hanafalah\ModulePayment\Concerns\HasDeposit;
 
-class Payer extends Organization
+class Payer extends Company
 {
-    use HasConsumentInvoice, HasDeposit;
-
     protected $table = 'unicodes';
+
+    protected static function booted(): void{
+        parent::booted();
+        static::addGlobalScope('flag',function($query){
+            $query->where('flag','Company');
+        });
+        static::creating(function ($query) {
+            $query->flag = 'Company';
+        });
+    }
 
     public function viewUsingRelation(): array{
         return [];

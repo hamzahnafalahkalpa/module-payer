@@ -2,9 +2,9 @@
 
 namespace Hanafalah\ModulePayer\Resources\Payer;
 
-use Hanafalah\ModuleOrganization\Resources\Organization\ViewOrganization;
+use Hanafalah\ModulePayer\Resources\Company\ViewCompany;
 
-class ViewPayer extends ViewOrganization
+class ViewPayer extends ViewCompany
 {
   public function toArray(\Illuminate\Http\Request $request): array
   {

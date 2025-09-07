@@ -14,7 +14,11 @@ class ShowCompany extends ViewCompany
    */
   public function toArray(\Illuminate\Http\Request $request): array
   {
-    $arr   = [];
+    $arr   = [
+      'user_wallet' => $this->relationValidation('userWallet',function(){
+          return $this->userWallet->toShowApi();
+      })
+    ];
     $show  = $this->resolveNow(new OrganizationShowOrganization($this));
     $arr   = $this->mergeArray(parent::toArray($request), $show, $arr);
     return $arr;

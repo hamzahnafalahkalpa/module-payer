@@ -5,12 +5,13 @@ namespace Hanafalah\ModulePayer\Models;
 use Hanafalah\ModuleOrganization\Models\Organization;
 use Hanafalah\ModulePayer\Resources\Company\ShowCompany;
 use Hanafalah\ModulePayer\Resources\Company\ViewCompany;
-use Hanafalah\ModulePayment\Concerns\HasConsumentInvoice;
-use Hanafalah\ModulePayment\Concerns\HasDeposit;
+use Hanafalah\ModulePayment\Concerns\{
+    HasPaymentSummaryDeferred, HasUserWallet
+};
 
 class Company extends Organization
 {
-    use HasConsumentInvoice, HasDeposit;
+    use HasPaymentSummaryDeferred, HasUserWallet;
 
     protected $table = 'unicodes';
 

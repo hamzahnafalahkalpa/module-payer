@@ -2,6 +2,4 @@
 
 namespace Hanafalah\ModulePayer\Contracts\Data;
 
-use Hanafalah\ModuleOrganization\Contracts\Data\OrganizationData;
-
-interface PayerData extends OrganizationData{}
+interface PayerData extends CompanyData{}

@@ -3,12 +3,11 @@
 namespace Hanafalah\ModulePayer\Schemas;
 
 use Illuminate\Database\Eloquent\Builder;
-use Hanafalah\ModuleOrganization\Schemas\Organization;
 use Hanafalah\ModulePayer\Contracts\Data\PayerData;
 use Hanafalah\ModulePayer\Contracts\Schemas as Contracts;
 use Illuminate\Database\Eloquent\Model;
 
-class Payer extends Organization implements Contracts\Payer
+class Payer extends Company implements Contracts\Payer
 {
     protected string $__entity = 'Payer';
     public $payer_model;
@@ -23,11 +22,12 @@ class Payer extends Organization implements Contracts\Payer
     ];
 
     public function prepareStorePayer(PayerData $payer_dto): Model{
-        $payer = $this->prepareStoreOrganization($payer_dto);
+        $payer = $this->prepareStoreCompany($payer_dto);
+
         return $this->payer_model = $payer;
     }
 
-    public function payer(mixed $conditionals = []): Builder{
-        return $this->organization()->where('props->is_payer_able',true);
+    public function payer(mixed $conditionals = null): Builder{
+        return $this->company($conditionals)->where('props->is_payer_able',true);
     }
 }

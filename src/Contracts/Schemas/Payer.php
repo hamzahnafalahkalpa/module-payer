@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method LengthAwarePaginator prepareViewPayerPaginate(PaginateData $paginate_dto)
  * @method array viewPayerPaginate(?PaginateData $paginate_dto = null)
  */
-interface Payer extends Organization
+interface Payer extends Company
 {
     public function prepareStorePayer(PayerData $payer_dto): Model;
     public function payer(mixed $conditionals = []): Builder;
